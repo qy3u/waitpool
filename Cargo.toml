@@ -1,0 +1,22 @@
+[package]
+name = "waitpool"
+version = "0.1.0"
+edition = "2018"
+
+repository = "https://github.com/qy3u/waitpool"
+homepage = "https://github.com/qy3u/waitpool"
+documentation = "https://github.com/qy3u/waitpool"
+description = "waitpool"
+license = "MIT OR Apache-2.0"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+
+
+[dev-dependencies]
+crossbeam = "0.8.1"
+
+[[example]]
+name = "basic"
+path = "examples/basic.rs"
