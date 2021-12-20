@@ -28,18 +28,22 @@ impl<T> Pool<T> {
 
     pub fn get(&self) -> Pooled<T> {
         loop {
-            let mut inner = self.inner.lock();
-            if inner.count == 0 {
-                panic!("get before pooled any element");
-            }
-
-            if let Some(elem) = inner.pooled.pop_front() {
-                return Pooled {
-                    pool: self as *const Pool<T> as *mut Pool<T>,
-                    elem: Some(elem),
-                };
+            if let Some(p) = self.try_get() {
+                return p;
             }
         }
+    }
+
+    pub fn try_get(&self) -> Option<Pooled<T>> {
+        let mut inner = self.inner.lock();
+        if inner.count == 0 {
+            panic!("get before pooled any element");
+        }
+
+        inner.pooled.pop_front().map(|elem| Pooled {
+            pool: self as *const Pool<T> as *mut Pool<T>,
+            elem: Some(elem),
+        })
     }
 
     pub fn pool(&mut self, elem: T) {
