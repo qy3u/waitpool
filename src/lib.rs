@@ -46,7 +46,7 @@ impl<T> Pool<T> {
         })
     }
 
-    pub fn pool(&mut self, elem: T) {
+    pub fn pool(&self, elem: T) {
         let mut inner = self.inner.lock();
         inner.count += 1;
         inner.pooled.push_back(elem)
